@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+  web_server:
+    build:
+      context: ./
+    links:
+      - database_server
+    ports:
+    - 5000:5000
+
+  database_server:
+    image: postgres
+    ports:
+    - 5432:5432
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: postgres
+
+  adminer:
+    image: adminer
+    restart: always
+    depends_on:
+      - database_server
+    ports:
+    - 8080:8080
