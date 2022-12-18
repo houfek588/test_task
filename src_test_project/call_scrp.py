@@ -1,20 +1,33 @@
-import os
-import json
-import database
+# import os
+# import json
+# import database
 
 # os.system('scrapy crawl sreality -O sr1.json')
 
-with open("sr1.json", encoding = 'utf-8') as f:
+# with open("sr1.json", encoding = 'utf-8') as f:
+#
+#     file = json.loads(f.read())
+#
+#
+# SaveData = database.MyPostgreSQLData()
+#
+# SaveData.delete_all()
+# for y in file:
+#     SaveData.insert_row(y['name'],y['link'])
+# import scrapy
+# from scrapy.crawler import CrawlerProcess
+#
+# class TestSpider(scrapy.Spider):
+#     name = 'sreality'
+#
+# if __name__ == "__main__":
+#   process = CrawlerProcess()
+#   process.crawl(TestSpider)
+#   process.start()
 
-    file = json.loads(f.read())
 
+# print(SaveData.get_all())
 
-SaveData = database.MyPostgreSQLData()
+import subprocess
 
-SaveData.delete_all()
-for y in file:
-    SaveData.insert_row(y['name'],y['link'])
-
-
-
-print(SaveData.get_all())
+subprocess.run(["scrapy", "crawl", "sreality", "-o", "quotes_all.json"])

@@ -6,8 +6,11 @@ services:
       context: ./
     links:
       - database_server
+      - splash
+    environment:
+      SPLASH_URL: "http://splash:8050"
     ports:
-    - 5000:5000
+    - 8080:8080
 
   database_server:
     image: postgres
@@ -25,4 +28,9 @@ services:
     depends_on:
       - database_server
     ports:
-    - 8080:8080
+    - 8000:8000
+
+  splash:
+    image: scrapinghub/splash
+    ports:
+      - 8050:8050

@@ -21,18 +21,38 @@ USER_AGENT = 'ia_archiver'
 ROBOTSTXT_OBEY = False
 
 # for chrome driver
-from shutil import which
-
-SELENIUM_DRIVER_NAME = 'chrome'
-SELENIUM_DRIVER_EXECUTABLE_PATH = which('chromedriver')
-SELENIUM_DRIVER_ARGUMENTS = ['--headless']
-
-DOWNLOADER_MIDDLEWARES = {
-    'scrapy_selenium.SeleniumMiddleware': 800
-}
+# from shutil import which
+#
+# SELENIUM_DRIVER_NAME = 'chrome'
+# SELENIUM_DRIVER_EXECUTABLE_PATH = which('chromedriver')
+# SELENIUM_DRIVER_ARGUMENTS = ['--headless']
+#
+# DOWNLOADER_MIDDLEWARES = {
+#     'scrapy_selenium.SeleniumMiddleware': 800
+# }
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
+
+# Splash Server Endpoint
+SPLASH_URL = 'http://localhost:8050'
+
+
+# Enable Splash downloader middleware and change HttpCompressionMiddleware priority
+DOWNLOADER_MIDDLEWARES = {
+    'scrapy_splash.SplashCookiesMiddleware': 723,
+    'scrapy_splash.SplashMiddleware': 725,
+    'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
+}
+
+# Enable Splash Deduplicate Args Filter
+SPIDER_MIDDLEWARES = {
+    'scrapy_splash.SplashDeduplicateArgsMiddleware': 100,
+}
+
+# Define the Splash DupeFilter
+DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
+HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
